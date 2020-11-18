@@ -29,7 +29,7 @@ class Region(GameElement):
         if max_players%room_size:
             queue_size+=max_players - rooms_amount * room_size
         self._players = FixedSizeQueue(maxlen=queue_size)
-        self._default_name="Room"
+        self._default_name= default_name
         self._room_counter = 0
 
     @property

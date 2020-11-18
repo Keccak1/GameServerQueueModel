@@ -81,8 +81,12 @@ class GameServer:
         @app.route(f"{api_prefix}status")
         def status():
             return self._manager.to_dict()
-                     
 
+        @app.route(f"{api_prefix}stats")
+        def stats():
+            print(self._manager.stats)
+            return self._manager.stats
+                     
     @property
     def app(self):
         return self._app
@@ -91,17 +95,18 @@ def init_server():
    
     app = flask.Flask(__name__)
     api = Api(app)
+
     parser = reqparse.RequestParser()
     parser.add_argument("player_name")
     parser.add_argument("room_name")
     parser.add_argument("regions")
 
-    manager = SimpleGameManager(players_max=2,
+    manager = SimpleGameManager(players_max=20,
                                 regions_max=2)
 
     manager.add_region(Region(name="EUROPE",
                         max_players=100,
-                        room_size=100,
+                        room_size=10,
                         queue_size=20))
 
     manager.add_region(Region(name="ASIA",

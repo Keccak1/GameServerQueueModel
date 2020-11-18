@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
-from collections import defaultdict
+
 from .game_element import GameElement
 from .fixed_size_queue import FixedSizeQueue
 from .fixed_size_set import FixedSizeSet
 from .region import Region
+from .statistics_manager import StatisticsManager
 
 class AbstractGameManager(GameElement, ABC):
     def __init__(self,
@@ -18,6 +19,7 @@ class AbstractGameManager(GameElement, ABC):
             self._to_create_room  = int(players_max /2)
         self._players = FixedSizeQueue(maxlen=players_max)
         self._regions = FixedSizeSet(maxlen=regions_max)
+        self._stats_manager = StatisticsManager()
 
     @abstractmethod
     def most_effective_region_for_player(self, player):
@@ -30,6 +32,10 @@ class AbstractGameManager(GameElement, ABC):
     @property
     def in_queue(self):
         return self._players.size
+
+    @property
+    def stats(self):
+        return self._stats_manager.to_dict()
 
     def to_dict(self):
         return {"max_players": self._players.capacity,
@@ -49,6 +55,7 @@ class AbstractGameManager(GameElement, ABC):
 
     def add_player(self,player):
         if self._can_add_player(player):
+            self._stats_manager.player_start(player)
             region = self.most_effective_region_for_player(player)
             if region:
                 return region.add_player(player)
@@ -61,9 +68,11 @@ class AbstractGameManager(GameElement, ABC):
         for region in self._regions:
             if region.has_player_name(player_name):
                 status = region.remove_player_by_name(player_name)
+                self._stats_manager.player_stop(player_name)
                 if status and self._players.can_pop():
                     self._on_update(region)
                 return status
+
 
     def _on_update(self, region):
         same_region = self._players.find_by_lambda(lambda player: region.name in player.regions)
