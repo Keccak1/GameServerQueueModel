@@ -7,6 +7,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 pytz==2020.4
+scikit-fuzzy==0.4.2
 redis==3.5.3
 six==1.15.0
 Werkzeug==1.0.1
