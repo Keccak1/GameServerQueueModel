@@ -72,7 +72,6 @@ class GameServer:
                      {"manager": self._manager, 
                      "parser": self._parser})
                      
-
         self._api.add_resource(PlayerResourceWrapper, f"{api_prefix}players/<player_name>",
                      resource_class_kwargs=
                      {"manager": self._manager, 
@@ -119,7 +118,7 @@ def init_server():
 
 
 def main():
-    init_server().app.run(debug=True)
+    init_server().app.run(debug=True, host='0.0.0.0')
 
 if __name__ == "__main__":
     main()
