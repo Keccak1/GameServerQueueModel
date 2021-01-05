@@ -6,13 +6,3 @@ body {
     align-items: center;
     align-content: center;
 }
-
-main {
-    flex: 1;
-    display: flex;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    min-width: 1800px;
-}

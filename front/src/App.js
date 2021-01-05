@@ -1,19 +1,10 @@
 import React from "react";
-import Lobby from "./containers/Lobby";
-import Regions from "./containers/Regions";
-import { GameStatusProvider } from "./contexts/GameStatusContext";
+import Game from "./containers/Game";
 
 import "./style/app.css";
 
 const App = () => {
-    return (
-        <main>
-            <GameStatusProvider>
-                <Lobby />
-                <Regions />
-            </GameStatusProvider>
-        </main>
-    );
+    return <Game />;
 };
 
 export default App;
