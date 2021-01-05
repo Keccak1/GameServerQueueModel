@@ -1,4 +1,4 @@
-.gameContainer {
+.regionsContainer {
     flex: 5;
     display: flexbox;
     flex-direction: row;
@@ -10,13 +10,4 @@
     border-style: solid;
     border-radius: 20px;
     margin: 20px;
-}
-
-.regionsWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
-    flex: 3;
 }

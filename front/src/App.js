@@ -1,6 +1,6 @@
 import React from "react";
 import Lobby from "./containers/Lobby";
-import Game from "./containers/Game";
+import Regions from "./containers/Regions";
 import { GameStatusProvider } from "./contexts/GameStatusContext";
 
 import "./style/app.css";
@@ -10,7 +10,7 @@ const App = () => {
         <main>
             <GameStatusProvider>
                 <Lobby />
-                <Game />
+                <Regions />
             </GameStatusProvider>
         </main>
     );

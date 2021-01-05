@@ -7,48 +7,55 @@ class ApiRequester {
         this.counter = 0;
     }
 
-    async dummy() {
-        console.log(this.counter);
-        this.setStatus({ counter: this.counter });
-        this.counter += 1;
-        console.log(this.counter);
-    }
     async addPlayer(playerName, regions) {
-        const result = await axios.post(constants.addPlayerUrl, {
-            name: playerName,
-            regions: regions
-        });
-        if (result.status === 200) {
-            this.setStatus(JSON.stringify(result.data));
-            return true;
+        try {
+            const result = await axios.post(constants.addPlayerUrl, {
+                name: playerName,
+                regions: regions
+            });
+            return this.setResult(result);
+        } catch (err) {
+            console.log(err);
         }
     }
 
     async removePlayer(playerName) {
-        const result = await axios.delete(
-            `${constants.removePlayerUrl}/${playerName}`,
-            {
-                name: playerName
-            }
-        );
-
-        if (result.status === 200) {
-            this.setStatus(JSON.stringify(result.data));
-            return true;
+        try {
+            const result = await axios.delete(
+                `${constants.removePlayerUrl}/${playerName}`,
+                {
+                    name: playerName
+                }
+            );
+            return this.setResult(result);
+        } catch (err) {
+            console.log(err);
         }
     }
 
     async addRoom(playerName, roomName, regions) {
-        const result = await axios.post(constants.removePlayerUrl, {
-            player_name: playerName,
-            room_name: roomName,
-            regions: regions
-        });
+        try {
+            const result = await axios.post(constants.removePlayerUrl, {
+                player_name: playerName,
+                room_name: roomName,
+                regions: regions
+            });
+            return this.setResult(result);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
-        if (result.status === 200) {
+    setResult(result) {
+        if (result && result.status === 200) {
             this.setState(JSON.stringify(result.data));
             return true;
         }
+    }
+
+    async fetchData() {
+        const result = await axios.get(constants.status);
+        return this.setResult(result);
     }
 }
 

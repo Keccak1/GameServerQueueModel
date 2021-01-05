@@ -14,6 +14,24 @@ const Region = ({ name }) => {
                 </div>
                 <div className={"roomsWrapper"}>
                     <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
+                    <Room />
                 </div>
             </div>
         </div>
