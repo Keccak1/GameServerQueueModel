@@ -1,26 +1,23 @@
 import React, { useState } from "react";
 import Player from "./Player";
+import { UseGameStatus } from "../contexts/GameStatusContext";
 
 import "../style/queue.css";
 
-const dummyPlayers = ["Marcin", "Tomek", "Artur", "X", "A"];
-
-const Queue = () => {
-    const [players, setPlayers] = useState(dummyPlayers);
-    const handleOnClicked = (toRemoveName) => {
-        const newPlayers = players.filter((name) => name !== toRemoveName);
-        setPlayers(newPlayers);
-    };
+const Queue = ({ elements }) => {
     return (
         <div className={"queue"}>
             <ul>
-                {players.map((player) => (
-                    <Player
-                        name={player}
-                        key={player}
-                        handleOnClicked={handleOnClicked}
-                    />
-                ))}
+                {elements &&
+                    elements.map((player) => {
+                        return (
+                            <Player
+                                name={player.name}
+                                key={player.name}
+                                handleOnClick={() => console.log("XD")}
+                            />
+                        );
+                    })}
             </ul>
         </div>
     );

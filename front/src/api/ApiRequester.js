@@ -4,7 +4,6 @@ import constants from "./apiConstants";
 class ApiRequester {
     constructor(setStatus) {
         this.setStatus = setStatus;
-        this.counter = 0;
     }
 
     async addPlayer(playerName, regions) {
@@ -48,7 +47,7 @@ class ApiRequester {
 
     setResult(result) {
         if (result && result.status === 200) {
-            this.setState(JSON.stringify(result.data));
+            this.setStatus(result.data);
             return true;
         }
     }

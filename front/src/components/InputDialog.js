@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import InputDialogElement from "./InputDialogElement";
-
 import { useForm } from "react-hook-form";
+import { UseGameStatus } from "../contexts/GameStatusContext";
 
 import "./../style/inputDialog.css";
-// TODO: useEffect fetch all regions
+
 const InputDialog = () => {
     const operations = ["Add Player", "Add Room", "Remove Player"];
-    const regions = ["Asia", "Europe"];
     const [currentOption, setCurrentOperation] = useState(operations[0]);
+    const gameStatus = UseGameStatus();
+    const regions = gameStatus.regions;
     const { register, handleSubmit, erorrs } = useForm();
 
     const onSubmit = (data) => console.log(currentOption);
@@ -55,15 +56,16 @@ const InputDialog = () => {
                         labelName='Regions'
                         inputElement={
                             <div>
-                                {regions.map((region) => (
-                                    <div
-                                        key={region}
-                                        className={"inputDialogElement"}
-                                    >
-                                        <label>{region}</label>
-                                        <input type='checkbox' />
-                                    </div>
-                                ))}
+                                {regions &&
+                                    regions.map((region) => (
+                                        <div
+                                            key={region.name}
+                                            className={"inputDialogElement"}
+                                        >
+                                            <label>{region.name}</label>
+                                            <input type='checkbox' />
+                                        </div>
+                                    ))}
                             </div>
                         }
                     />
