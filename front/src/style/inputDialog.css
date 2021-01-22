@@ -1,0 +1,30 @@
+.inputDialog {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: spacen;
+    align-items: center;
+}
+
+.inputDialogWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+    align-items: center;
+    border-bottom: 1px;
+    border-bottom-color: white;
+    border-bottom-style: groove;
+    margin: 10px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.submitButton {
+    padding: 10px;
+    margin: 15px;
+}

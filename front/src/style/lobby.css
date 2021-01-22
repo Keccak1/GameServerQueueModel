@@ -1,0 +1,20 @@
+.lobbyContainer {
+    text-align: center;
+    display: flexbox;
+    flex-direction: column;
+    justify-content: space-between;
+    border-color: white;
+    border-width: 8px;
+    border-style: solid;
+    border-radius: 20px;
+    margin: 20px;
+    flex: 1;
+}
+
+.queueSpan {
+    border-bottom-color: white;
+    border-bottom-width: 1px;
+    padding-bottom: 5px;
+    font-size: 20px;
+    border-bottom-style: groove;
+}

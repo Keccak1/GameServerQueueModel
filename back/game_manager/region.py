@@ -7,6 +7,7 @@ from .game_element import GameElement
 
 from functools import reduce
 
+
 class Region(GameElement):
 
     def __init__(self,
@@ -16,7 +17,7 @@ class Region(GameElement):
                  queue_size,
                  minimum_players_to_room=None,
                  default_name="Room"):
-                     
+
         super().__init__()
         self._name = name
         self._max_players = max_players
@@ -26,10 +27,10 @@ class Region(GameElement):
         if minimum_players_to_room is None:
             minimum_players_to_room = room_size/2
         self._minimum_players_to_room = int(minimum_players_to_room)
-        if max_players%room_size:
-            queue_size+=max_players - rooms_amount * room_size
+        if max_players % room_size:
+            queue_size += max_players - rooms_amount * room_size
         self._players = FixedSizeQueue(maxlen=queue_size)
-        self._default_name= default_name
+        self._default_name = default_name
         self._room_counter = 0
 
     @property
@@ -53,11 +54,11 @@ class Region(GameElement):
         return self._rooms.size()
 
     def to_dict(self):
-        return {"name": self._name, 
-        "max_players": self._max_players,
-        "room_size": self._room_size,
-        "queue": [player.to_dict() for player in self._players],
-        "rooms": [room.to_dict() for room in self._rooms] }
+        return {"name": self._name,
+                "max_players": self._max_players,
+                "room_size": self._room_size,
+                "queue": [player.to_dict() for player in self._players],
+                "rooms": [room.to_dict() for room in self._rooms]}
 
     def add_player(self, player):
         ret = None
@@ -82,8 +83,9 @@ class Region(GameElement):
         return new_room
 
     def can_add_player(self, player):
-        basic = not self.has_player_name(player.name) and self.same_region(player)
-        has_place = self.player_free_places() != 0 or self._players.free_places() !=0
+        basic = not self.has_player_name(
+            player.name) and self.same_region(player)
+        has_place = self.player_free_places() != 0 or self._players.free_places() != 0
         return basic and has_place
 
     def same_region(self, player):
@@ -107,10 +109,10 @@ class Region(GameElement):
     def room_exists(self, room_name):
         return room_name in [room.name for room in self._rooms]
 
-    def can_create_room(self, room_name = None):
+    def can_create_room(self, room_name=None):
         ret = not self._rooms.full()
         if room_name:
-            ret&= not self.room_exists(room_name)
+            ret &= not self.room_exists(room_name)
         return ret
 
     def room_size(self):
@@ -119,21 +121,22 @@ class Region(GameElement):
     def room_free_places(self, room_name=None):
         ret = 0
         if not room_name or not self.room_exists(room_name):
-                ret = self._rooms.free_places()
+            ret = self._rooms.free_places()
         return ret
 
     def to_create_room(self):
-        return self._minimum_players_to_room - self._players.size 
-        
+        return self._minimum_players_to_room - self._players.size
+
     def player_free_places(self, player_name=None):
         ret = 0
         if (not player_name or not self.has_player_name(player_name)) and not self._rooms.empty():
-            ret = reduce(lambda places_sum, new_places: places_sum+new_places,[room.free_places() for room in self._rooms])
+            ret = reduce(lambda places_sum, new_places: places_sum +
+                         new_places, [room.free_places() for room in self._rooms])
         return ret
-    
+
     def player_names(self):
-        return reduce(lambda current_names, new_names: current_names.update(new_names),
-                      [room.player_names() for room in self._rooms])
+        return set(reduce(lambda current_names, new_names: current_names.update(new_names),
+                      [room.player_names() for room in self._rooms]))
 
     def room_names(self):
         return set([room.name for room in self._rooms])
@@ -146,31 +149,31 @@ class Region(GameElement):
         if not ret:
             ret = self._remove_from_queue(player_name)
         return ret
-    
+
     def _update_room(self, room):
-        in_queue, free_places =self._players.size, room.free_places()
-        new_players_amount = min(in_queue,free_places)
+        in_queue, free_places = self._players.size, room.free_places()
+        new_players_amount = min(in_queue, free_places)
         for _ in range(new_players_amount):
             from_queue = self._players.pop()
             room.add_player(from_queue)
-        
+
         if room.empty():
             self._rooms.remove(room)
 
     def _get_free_room(self, player_name=None):
         for room in self._rooms:
             if room.can_add_player(player_name):
-                return  room
+                return room
 
     def _get_next_room_name(self):
         next_name = self._default_name + str(self._room_counter)
 
         while self.room_exists(next_name):
-            self._room_counter+=1
+            self._room_counter += 1
             next_name = self._default_name + str(self._room_counter)
 
         return next_name
-        
+
     def _remove_from_queue(self, player_name):
         return self._players.remove_lambda(lambda player: player.name == player_name)
 
@@ -183,5 +186,5 @@ class Region(GameElement):
 
         if to_update:
             self._update_room(to_update)
-        
+
         return ret

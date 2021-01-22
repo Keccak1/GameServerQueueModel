@@ -2,6 +2,7 @@ from .fixed_size_set import FixedSizeSet
 from .player import Player
 from .game_element import GameElement
 
+
 class Room(GameElement):
 
     def __init__(self, name, size):
@@ -10,7 +11,7 @@ class Room(GameElement):
         self._players = FixedSizeSet(maxlen=size)
 
     def __repr__(self):
-        return f"Name: {self._name}, players: {str(self._players)}" 
+        return f"Name: {self._name}, players: {str(self._players)}"
 
     @property
     def name(self):
@@ -23,10 +24,9 @@ class Room(GameElement):
     @property
     def maxlen(self):
         return self._players.maxlen
-        
 
     def to_dict(self):
-        return {"name": self.name, "size": self._players.size, "players": [player.to_dict() for player in self._players] }
+        return {"name": self.name, "size": self._players.size, "players": [player.to_dict() for player in self._players]}
 
     def has_player(self, player_name):
         return self._players.find_by_lambda(
@@ -47,7 +47,8 @@ class Room(GameElement):
     def can_add_player(self, player_name=None):
         ret = not self.full()
         if player_name:
-            ret&= not self._players.find_by_lambda(lambda player: player.name == player_name)
+            ret &= not self._players.find_by_lambda(
+                lambda player: player.name == player_name)
         return ret
 
     def remove_player(self, name):
@@ -57,11 +58,10 @@ class Room(GameElement):
         return self._players.remove_lambda(lambda room: room.name in names)
 
     def add_player(self, player):
-        ret = self.can_add_player(player.name) 
+        ret = self.can_add_player(player.name)
         if ret:
             return self._players.add(player)
         return ret
 
     def add_players(self, players):
         return self._players.add_range(players)
-

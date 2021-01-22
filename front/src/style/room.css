@@ -1,0 +1,19 @@
+.room {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    border: white;
+    border-width: 2px;
+    border-style: groove;
+}
+
+.name {
+    flex: 1;
+}
+
+.queueWrapperRoom {
+    flex: 5;
+    border-right: none;
+}

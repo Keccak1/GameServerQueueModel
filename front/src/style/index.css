@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around; 
+  background-color: #06111C;
+  color: white;
+}
+
+
+

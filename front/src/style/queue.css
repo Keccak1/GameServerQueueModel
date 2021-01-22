@@ -1,0 +1,15 @@
+.queue {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 10px;
+    padding: 10px;
+}

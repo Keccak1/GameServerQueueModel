@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  front:
+    container_name: game_server_front
+    build: ./front
+    volumes:
+      - ./front:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - game_server
+  back:
+    container_name: game_server_back
+    build: ./back
+    volumes:
+      - ./back:/app
+    ports:
+      - "5000:5000"
+    networks:
+      - game_server
+
+networks:
+  game_server:
+    driver: bridge
